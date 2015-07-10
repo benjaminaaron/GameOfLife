@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta name="author" content="benjaminaaron">
+        <title>Game of Life</title>
+        <script type="text/javascript" src="js/View.js"></script>
+        <script type="text/javascript" src="js/Grid.js"></script>
+        <script type="text/javascript" src="js/Simulation.js"></script>
+        <script type="text/javascript" src="js/Seeds.js"></script>
+    </head>
+
+    <body>
+
+        <button onclick='start()'>start</button>
+        <button onclick='stop()'>stop</button>
+        <button onclick='nextSeed()'>load another seed</button>
+        <br><br>
+        <div id='viewContainer' />
+
+        <script>
+
+            var rows = 20;
+            var cols = 30;
+
+            var view = new View(cols, rows, document.getElementById('viewContainer'));
+
+            var seedIndex = 0;
+            var sim = new Simulation(cols, rows, Seeds[seedIndex], view);
+
+
+            var timer;
+
+            function Timer() {
+                sim.update();
+            };
+
+            function start(){
+                timer = setInterval(function () {Timer()}, 400);
+            };
+
+            function stop(){
+                clearInterval(timer);
+            };
+
+            function nextSeed(){
+                seedIndex ++;
+                if(seedIndex == Seeds.length)
+                    seedIndex = 0;
+                sim = new Simulation(cols, rows, Seeds[seedIndex], view);
+            };
+
+        </script>
+
+    </body>
+</html>
