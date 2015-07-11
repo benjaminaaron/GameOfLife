@@ -14,6 +14,7 @@
         <button onclick='start()'>start</button>
         <button onclick='stop()'>stop</button>
         <button onclick='nextSeed()'>load another seed</button>
+        <input id="speed" type="range" min="1" max="60" value="3" />
         <br><br>
         <div id='viewContainer' />
 
@@ -21,25 +22,34 @@
 
             var rows = 30;
             var cols = 50;
+            var speed = 3;
 
             var view = new View(cols, rows, document.getElementById('viewContainer'));
 
             var seedIndex = 0;
             var sim = new Simulation(cols, rows, Seeds[seedIndex], view);
 
-
-            var timer;
-
-            function Timer() {
-                sim.update();
+            var speedCtrl = document.getElementById("speed");
+            speedCtrl.oninput = speedCtrl.onchange = function(ev) {
+                speed = parseInt(this.value, 10);
             };
 
-            function start(){
-                timer = setInterval(function () {Timer()}, 400);
+            var stopped;
+
+            function update() {
+                if(!stopped) {
+                    sim.update();
+                    setTimeout(update, 1000/speed);
+                }
+            }
+
+            function start() {
+                stopped = false;
+                setTimeout(update, 1000/speed);
             };
 
             function stop(){
-                clearInterval(timer);
+                stopped = true;
             };
 
             function nextSeed(){
