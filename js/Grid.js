@@ -15,15 +15,14 @@ Grid.prototype = {
     deadOrAlive: function(col, row){
         var aliveNeighbours = this.countAliveNeighbours(col, row);
 
-        // apply the rules
+        // apply rules
         var currentlyAlive = this.cells[col][row];
 
         if(aliveNeighbours < 2)
             return false;
         if(aliveNeighbours > 3)
             return false;
-
-        if(!currentlyAlive && aliveNeighbours == 3)
+        if(aliveNeighbours == 3)
             return true;
 
         return currentlyAlive;
@@ -42,6 +41,7 @@ Grid.prototype = {
 		return aliveNeighbours;
 	},
 
+/*
     toString: function(){
         var str = '';
         for(var r = 0; r < this.rows; r ++){
@@ -51,7 +51,7 @@ Grid.prototype = {
         }
         return str;
     }
-
+*/
 };
 
 var NeighbourDirections = [

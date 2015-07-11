@@ -11,10 +11,10 @@
 
     <body>
 
-        <button onclick='start()'>start</button>
-        <button onclick='stop()'>stop</button>
-        <button onclick='nextSeed()'>load another seed</button>
-        <input id="speed" type="range" min="1" max="60" value="3" />
+        <input onclick='startstop()' type='button' value='start' id='startstopBtn'>
+        <input onclick='nextSeed()' type='button' value='load next seed'>
+        &nbsp;&nbsp;<input id='speed' type='range' min='1' max='60' value='3' />
+        &nbsp;&nbsp;<label id="seedname">seed name</label>&nbsp;&nbsp;
         <br><br>
         <div id='viewContainer' />
 
@@ -29,27 +29,30 @@
             var seedIndex = 0;
             var sim = new Simulation(cols, rows, Seeds[seedIndex], view);
 
-            var speedCtrl = document.getElementById("speed");
+            var speedCtrl = document.getElementById('speed');
             speedCtrl.oninput = speedCtrl.onchange = function(ev) {
                 speed = parseInt(this.value, 10);
             };
 
-            var stopped;
+            var stopped = true;
 
             function update() {
                 if(!stopped) {
                     sim.update();
-                    setTimeout(update, 1000/speed);
+                    setTimeout(update, 1000 / speed);
                 }
-            }
-
-            function start() {
-                stopped = false;
-                setTimeout(update, 1000/speed);
             };
 
-            function stop(){
-                stopped = true;
+            function startstop(){
+                if(stopped){
+                    document.getElementById('startstopBtn').value = 'stop';
+                    stopped = false;
+                    setTimeout(update, 1000 / speed);
+                }
+                else {
+                    document.getElementById('startstopBtn').value = 'start';
+                    stopped = true;
+                }
             };
 
             function nextSeed(){

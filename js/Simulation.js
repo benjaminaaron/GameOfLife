@@ -1,4 +1,4 @@
-var Simulation = function(cols, rows, seed, view){
+var Simulation = function(cols, rows, seedObj, view){
     this.cols = cols;
     this.rows = rows;
     this.view = view;
@@ -7,6 +7,7 @@ var Simulation = function(cols, rows, seed, view){
 
     //SEED
 
+    var seed = seedObj.seed;
     var seedrows = seed.length;
     var seedcols = seed[0].length;
 
@@ -24,6 +25,7 @@ var Simulation = function(cols, rows, seed, view){
     }
     //console.log(this.grid + '');
 
+    document.getElementById('seedname').innerHTML = seedObj.name;
     this.updateView();
 };
 
